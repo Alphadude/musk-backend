@@ -1,0 +1,117 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model Admin {
+  id        Int       @id @default(autoincrement())
+  name      String
+  email     String    @unique
+  password  String
+  role      String    @default("Viewer") // Admin, Manager, Viewer
+  status    String    @default("Active") // Active, Inactive
+  lastLogin DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Company {
+  id          Int         @id @default(autoincrement())
+  logo        String?
+  banner      String?
+  name        String
+  email       String      @unique
+  phone       String
+  country     String      @default("Nigeria")
+  location    String
+  postalCode  String?
+  description String?     @db.Text
+  equipments  Equipment[]
+  vessels     Vessel[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model Equipment {
+  id               Int      @id @default(autoincrement())
+  companyId        Int
+  company          Company  @relation(fields: [companyId], references: [id])
+  status           String   @default("Available")
+  condition        String   @default("Excellent")
+  name             String
+  category         String
+  details          String?  @db.Text
+  weight           Float?
+  yearManufactured Int?
+  hourlyRate       Float?
+  dailyRate        Float?
+  monthlyRate      Float?
+  images           String?  @db.Text // Comma separated image URLs
+  orders           Order[]
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model Vessel {
+  id                  Int      @id @default(autoincrement())
+  companyId           Int
+  company             Company  @relation(fields: [companyId], references: [id])
+  status              String   @default("Available")
+  condition           String   @default("Excellent")
+  name                String
+  type                String
+  builder             String?
+  yearBuilt           Int?
+  flag                String?
+  totalHP             Int?
+  maxSpeed            Float?
+  economicalSpeed     Float?
+  engineConfig        String?
+  length              Float?
+  breadth             Float?
+  depth               Float?
+  clearDeckSpace      String?
+  deckCargoCapacity   Float?
+  fuelConsumption     Float?
+  fuelCapacity        Float?
+  waterCapacity       Float?
+  mainEngines         String?  @db.Text
+  generators          String?  @db.Text
+  specialEquipment    String?  @db.Text
+  personCapacity      Int?
+  airConditioning     String?
+  additionalAmenities String?  @db.Text
+  dailyRate           Float?
+  monthlyRate         Float?
+  images              String?  @db.Text // Comma separated image URLs
+  orders              Order[]
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
+
+model Order {
+  id            Int        @id @default(autoincrement())
+  orderNumber   String     @unique // e.g., order-004
+  renterName    String
+  renterEmail   String
+  equipmentId   Int?
+  equipment     Equipment? @relation(fields: [equipmentId], references: [id])
+  vesselId      Int?
+  vessel        Vessel?    @relation(fields: [vesselId], references: [id])
+  startDate     DateTime
+  endDate       DateTime
+  totalPrice    Float
+  status        String     @default("confirmed") // confirmed, active, completed
+  paymentStatus String     @default("pending") // pending, paid
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+}
