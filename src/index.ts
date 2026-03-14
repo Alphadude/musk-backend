@@ -32,6 +32,9 @@ const swaggerOptions = {
         },
         servers: [
             {
+                url: `https://musk-backend.onrender.com`,
+            },
+            {
                 url: `http://localhost:${PORT}`,
             },
         ],
