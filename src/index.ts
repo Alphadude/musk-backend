@@ -75,7 +75,12 @@ app.get('/health', (req: Request, res: Response) => {
     res.json({ status: 'ok', message: 'MuskMover Backend is running (TypeScript)' });
 });
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-    console.log(`Swagger docs available at http://localhost:${PORT}/api-docs`);
-});
+// Start the server ONLY if this file is run directly
+if (require.main === module) {
+    app.listen(PORT, () => {
+        console.log(`Server is running on port ${PORT}`);
+        console.log(`Swagger docs available at http://localhost:${PORT}/api-docs`);
+    });
+}
+
+export default app;
