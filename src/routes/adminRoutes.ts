@@ -12,12 +12,15 @@ const router = Router();
  *       required:
  *         - name
  *         - email
+ *         - password
  *       properties:
  *         id:
  *           type: integer
  *         name:
  *           type: string
  *         email:
+ *           type: string
+ *         password:
  *           type: string
  *         role:
  *           type: string
