@@ -17,8 +17,8 @@ export const createOrUpdateAdmin = async (data: IAdmin, isCreate: boolean) => {
             email: data.email,
             password: hashedPassword,
             role: data.role || "Viewer",
-            status: data.status || "Active",
-            lastLogin: data.lastLogin || null,
+            status: "Active",
+            lastLogin: null,
         };
 
         const admin = await prisma.admin.create({

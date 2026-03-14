@@ -14,8 +14,6 @@ const router = Router();
  *         - email
  *         - password
  *       properties:
- *         id:
- *           type: integer
  *         name:
  *           type: string
  *         email:
@@ -24,13 +22,11 @@ const router = Router();
  *           type: string
  *         role:
  *           type: string
- *           description: Choices are Admin, Manager, Viewer
- *         status:
- *           type: string
- *           description: Choices are Active, Inactive
- *         lastLogin:
- *           type: string
- *           format: date-time
+ *           enum:
+ *             - Admin
+ *             - Manager
+ *             - Viewer
+ *           description: "Role of the admin user. Options: Admin, Manager, Viewer."
  */
 
 /**
