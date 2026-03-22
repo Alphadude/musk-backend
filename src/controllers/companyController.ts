@@ -11,6 +11,20 @@ export const createCompany = async (req: Request, res: Response) => {
     }
 };
 
+export const updateCompany = async (req: Request, res: Response) => {
+    try {
+        const id = Number(req.params.id);
+        const payload = { ...req.body, id };
+        const company = await companyService.createOrUpdateCompany(payload, false);
+        res.json(successResponse('Company updated successfully', company));
+    } catch (error: any) {
+        if (error?.message === 'Company not found') {
+            return res.status(404).json(notFoundResponse('Company not found'));
+        }
+        res.status(500).json(errorResponse('Failed to update company', error));
+    }
+};
+
 export const getAllCompanies = async (req: Request, res: Response) => {
     try {
         const companies = await companyService.getAllCompanies();
