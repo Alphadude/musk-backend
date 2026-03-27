@@ -69,7 +69,7 @@ app.use('/api/companies', authMiddleware, companyRoutes);
 app.use('/api/admins', authMiddleware, adminRoutes);
 app.use('/api/equipment', authMiddleware, equipmentRoutes);
 app.use('/api/vessels', authMiddleware, vesselRoutes);
-app.use('/api/orders', authMiddleware, orderRoutes);
+app.use('/api/orders', orderRoutes);
 app.use('/api/uploads', authMiddleware, uploadRoutes);
 app.use('/api/notifications', authMiddleware, notificationRoutes);
 

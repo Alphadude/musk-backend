@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import * as orderController from '../controllers/orderController';
+import { authMiddleware } from '../middleware/authMiddleware';
 
 const router = Router();
 
@@ -81,6 +82,9 @@ const router = Router();
  *         description: Created
  */
 router.post('/', orderController.createOrder);
+
+// Apply authentication middleware to the following routes (GET is still public within the middleware)
+router.use(authMiddleware);
 
 /**
  * @swagger
