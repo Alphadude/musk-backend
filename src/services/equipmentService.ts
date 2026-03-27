@@ -19,9 +19,20 @@ export const createOrUpdateEquipment = async (data: IEquipment, isCreate: boolea
     };
 
     if (isCreate) {
-        return await prisma.equipment.create({
-            data: equipmentData
+        const equipment = await prisma.equipment.create({
+            data: equipmentData,
+            include: { company: true }
         });
+
+        const { createNotification } = require('./notificationService');
+        await createNotification({
+            title: 'New Equipment Added',
+            message: `New equipment (${equipment.name}) has been added for ${equipment.company.name}.`,
+            type: 'Equipment',
+            relatedId: equipment.id,
+        });
+
+        return equipment;
     } else {
         if (!data.id) {
             throw new Error('Invalid equipment ID for update');

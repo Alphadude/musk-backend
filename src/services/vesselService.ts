@@ -36,9 +36,20 @@ export const createOrUpdateVessel = async (data: IVessel, isCreate: boolean) => 
     };
 
     if (isCreate) {
-        return await prisma.vessel.create({
-            data: vesselData
+        const vessel = await prisma.vessel.create({
+            data: vesselData,
+            include: { company: true }
         });
+
+        const { createNotification } = require('./notificationService');
+        await createNotification({
+            title: 'New Vessel Added',
+            message: `A new vessel (${vessel.name}) has been added for ${vessel.company.name}.`,
+            type: 'Vessel',
+            relatedId: vessel.id,
+        });
+
+        return vessel;
     } else {
         if (!data.id) {
             throw new Error('Invalid vessel ID for update');

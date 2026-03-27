@@ -17,9 +17,19 @@ export const createOrUpdateCompany = async (data: ICompany, isCreate: boolean) =
     };
 
     if (isCreate) {
-        return await prisma.company.create({
+        const company = await prisma.company.create({
             data: companyData
         });
+
+        const { createNotification } = require('./notificationService');
+        await createNotification({
+            title: 'New Company Registered',
+            message: `A new company (${company.name}) has been registered.`,
+            type: 'Company',
+            relatedId: company.id,
+        });
+
+        return company;
     } else {
         if (!data.id) {
             throw new Error('Invalid company ID for update');

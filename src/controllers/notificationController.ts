@@ -2,6 +2,15 @@ import { Request, Response } from 'express';
 import * as notificationService from '../services/notificationService';
 import { successResponse, errorResponse, notFoundResponse } from '../lib/responseHandler';
 
+export const createNotification = async (req: Request, res: Response) => {
+    try {
+        const notification = await notificationService.createNotification(req.body);
+        res.status(201).json(successResponse('Notification created successfully', notification));
+    } catch (error) {
+        res.status(500).json(errorResponse('Failed to create notification', error));
+    }
+};
+
 export const getNotifications = async (req: Request, res: Response) => {
     try {
         const notifications = await notificationService.getNotifications();

@@ -46,8 +46,34 @@ const router = Router();
  *     responses:
  *       200:
  *         description: List of notifications
+ *   post:
+ *     summary: Create a new notification
+ *     tags: [Notifications]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - title
+ *               - message
+ *               - type
+ *             properties:
+ *               title:
+ *                 type: string
+ *               message:
+ *                 type: string
+ *               type:
+ *                 type: string
+ *               relatedId:
+ *                 type: integer
+ *     responses:
+ *       201:
+ *         description: Created
  */
 router.get('/', notificationController.getNotifications);
+router.post('/', notificationController.createNotification);
 
 /**
  * @swagger
