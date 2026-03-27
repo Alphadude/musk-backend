@@ -13,6 +13,7 @@ export const createOrUpdateCompany = async (data: ICompany, isCreate: boolean) =
         location: data.location,
         postalCode: data.postalCode || null,
         description: data.description || null,
+        status: data.status || "Unverified",
     };
 
     if (isCreate) {
@@ -37,6 +38,21 @@ export const createOrUpdateCompany = async (data: ICompany, isCreate: boolean) =
             data: companyData
         });
     }
+};
+
+export const verifyCompany = async (id: number) => {
+    const company = await prisma.company.findUnique({
+        where: { id }
+    });
+
+    if (!company) {
+        throw new Error('Company not found');
+    }
+
+    return await prisma.company.update({
+        where: { id },
+        data: { status: "Verified" }
+    });
 };
 
 export const getAllCompanies = async () => {

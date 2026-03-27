@@ -9,4 +9,5 @@ export interface ICompany {
     location: string;
     postalCode?: string;
     description?: string;
+    status?: string;
 }

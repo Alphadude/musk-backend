@@ -10,4 +10,11 @@ export interface IOrder {
     totalPrice: number;
     status?: string;
     paymentStatus?: string;
+    company?: string | null;
+    contactPerson?: string | null;
+    phone?: string | null;
+    industrySector?: string | null;
+    projectLocation?: string | null;
+    totalDuration?: string | null;
+    crewRequested?: boolean | null;
 }

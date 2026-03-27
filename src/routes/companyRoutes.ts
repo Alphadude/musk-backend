@@ -37,6 +37,9 @@ const router = Router();
  *           type: string
  *         description:
  *           type: string
+ *         status:
+ *           type: string
+ *           example: Unverified
  *         createdAt:
  *           type: string
  *           format: date-time
@@ -260,6 +263,43 @@ router.get('/:id', companyController.getCompanyById);
  *         description: Internal server error
  */
 router.put('/:id', companyController.updateCompany);
+
+
+/**
+ * @swagger
+ * /api/companies/{id}/verify:
+ *   patch:
+ *     summary: Verify a company by ID
+ *     tags: [Companies]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: The company ID
+ *     responses:
+ *       200:
+ *         description: Company verified successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: Company verified successfully
+ *                 data:
+ *                   $ref: '#/components/schemas/Company'
+ *       404:
+ *         description: Company not found
+ *       500:
+ *         description: Internal server error
+ */
+router.patch('/:id/verify', companyController.verifyCompany);
 
 /**
  * @swagger

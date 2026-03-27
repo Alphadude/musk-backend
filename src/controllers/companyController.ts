@@ -47,6 +47,19 @@ export const getCompanyById = async (req: Request, res: Response) => {
     }
 };
 
+export const verifyCompany = async (req: Request, res: Response) => {
+    try {
+        const id = Number(req.params.id);
+        const company = await companyService.verifyCompany(id);
+        res.json(successResponse('Company verified successfully', company));
+    } catch (error: any) {
+        if (error?.message === 'Company not found') {
+            return res.status(404).json(notFoundResponse('Company not found'));
+        }
+        res.status(500).json(errorResponse('Failed to verify company', error));
+    }
+};
+
 export const deleteCompany = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;

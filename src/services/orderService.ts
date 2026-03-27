@@ -12,6 +12,13 @@ export const createOrUpdateOrder = async (data: IOrder, isCreate: boolean) => {
         totalPrice: data.totalPrice,
         status: data.status || "confirmed",
         paymentStatus: data.paymentStatus || "pending",
+        company: data.company,
+        contactPerson: data.contactPerson,
+        phone: data.phone,
+        industrySector: data.industrySector,
+        projectLocation: data.projectLocation,
+        totalDuration: data.totalDuration,
+        crewRequested: data.crewRequested ?? false,
     };
 
     if (data.equipmentId) {
@@ -22,9 +29,19 @@ export const createOrUpdateOrder = async (data: IOrder, isCreate: boolean) => {
     }
 
     if (isCreate) {
-        return await prisma.order.create({
+        const order = await prisma.order.create({
             data: orderData
         });
+
+        const { createNotification } = require('./notificationService');
+        await createNotification({
+            title: 'New Order Received',
+            message: `A new order (${order.orderNumber}) has been placed by ${order.contactPerson || order.renterName}.`,
+            type: 'Order',
+            relatedId: order.id,
+        });
+
+        return order;
     } else {
         if (!data.id) {
             throw new Error('Invalid order ID for update');

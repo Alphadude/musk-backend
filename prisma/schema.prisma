@@ -22,7 +22,8 @@ model Admin {
   lastLogin DateTime?
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  @@map("admin") 
+
+  @@map("admin")
 }
 
 model Company {
@@ -38,8 +39,10 @@ model Company {
   description String?     @db.Text
   equipments  Equipment[]
   vessels     Vessel[]
+  status      String      @default("Unverified")
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
+
   @@map("company")
 }
 
@@ -61,6 +64,7 @@ model Equipment {
   orders           Order[]
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
+
   @@map("equipment")
 }
 
@@ -99,6 +103,7 @@ model Vessel {
   orders              Order[]
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
+
   @@map("vessel")
 }
 
@@ -116,7 +121,28 @@ model Order {
   totalPrice    Float
   status        String     @default("confirmed") // confirmed, active, completed
   paymentStatus String     @default("pending") // pending, paid
+  company       String?
+  contactPerson String?
+  phone         String?
+  industrySector String?
+  projectLocation String?
+  totalDuration String?
+  crewRequested Boolean?   @default(false)
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
+
   @@map("order")
+}
+
+model Notification {
+  id        Int      @id @default(autoincrement())
+  title     String
+  message   String   @db.Text
+  type      String    // e.g., "Order"
+  relatedId Int?     // e.g., orderId
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("notification")
 }

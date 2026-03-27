@@ -11,6 +11,7 @@ import equipmentRoutes from './routes/equipmentRoutes';
 import vesselRoutes from './routes/vesselRoutes';
 import orderRoutes from './routes/orderRoutes';
 import uploadRoutes from './routes/uploadRoutes';
+import notificationRoutes from './routes/notificationRoutes';
 
 import authRoutes from './routes/authRoutes';
 import { authMiddleware } from './middleware/authMiddleware';
@@ -70,6 +71,7 @@ app.use('/api/equipment', authMiddleware, equipmentRoutes);
 app.use('/api/vessels', authMiddleware, vesselRoutes);
 app.use('/api/orders', authMiddleware, orderRoutes);
 app.use('/api/uploads', authMiddleware, uploadRoutes);
+app.use('/api/notifications', authMiddleware, notificationRoutes);
 
 // Basic health check
 app.get('/health', (req: Request, res: Response) => {

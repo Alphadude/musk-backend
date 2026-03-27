@@ -41,6 +41,20 @@ const router = Router();
  *           type: string
  *         paymentStatus:
  *           type: string
+ *         company:
+ *           type: string
+ *         contactPerson:
+ *           type: string
+ *         phone:
+ *           type: string
+ *         industrySector:
+ *           type: string
+ *         projectLocation:
+ *           type: string
+ *         totalDuration:
+ *           type: string
+ *         crewRequested:
+ *           type: boolean
  */
 
 /**
