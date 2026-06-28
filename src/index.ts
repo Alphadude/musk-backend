@@ -35,7 +35,7 @@ const swaggerOptions = {
         },
         servers: [
             {
-                url: `https://musk-backend.onrender.com`,
+                url: `https://muskmover-backend-5vd8m.ondigitalocean.app`,
             },
             {
                 url: `http://localhost:${PORT}`,
