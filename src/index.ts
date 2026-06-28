@@ -78,6 +78,15 @@ app.use('/api/notifications', authMiddleware, notificationRoutes);
 app.get('/health', (req: Request, res: Response) => {
     res.json({ status: 'ok', message: 'MuskMover Backend is running (TypeScript)' });
 });
+// Root route response to prevent "Cannot GET /"
+app.get('/', (req: Request, res: Response) => {
+    res.json({
+        status: 'ok',
+        message: 'MuskMover Backend API is running',
+        documentation: '/api-docs',
+        health: '/health'
+    });
+});
 
 // Start the server ONLY if this file is run directly
 if (require.main === module) {
